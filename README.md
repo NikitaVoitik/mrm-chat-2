@@ -1,6 +1,6 @@
 # mrm-chat-2
 
-A multi-person chat backend built with Django and Django REST Framework.
+A multi-person chat backend built with Django, Django REST Framework, and Django Channels with WebSocket support for real-time messaging.
 
 ## Features
 
@@ -10,14 +10,16 @@ A multi-person chat backend built with Django and Django REST Framework.
   - Student
   - University Staff
 - **Multi-person Chats**: Create chat rooms with multiple participants
+- **Real-time Messaging**: WebSocket support for instant message delivery
 - **Message History**: All messages are saved in SQLite database
 - **RESTful API**: Full REST API for all chat operations
+- **Backward Compatible**: REST API endpoints remain functional alongside WebSocket support
 
 ## Installation
 
 1. Install dependencies:
 ```bash
-pip install django djangorestframework
+pip install django djangorestframework channels daphne
 ```
 
 2. Run migrations:
@@ -34,6 +36,8 @@ python manage.py createsuperuser
 ```bash
 python manage.py runserver
 ```
+
+The server will automatically start with ASGI/WebSocket support.
 
 ## API Endpoints
 
@@ -55,9 +59,17 @@ python manage.py runserver
 - `POST /api/chats/` - Create a new chat
   - Body: `{"name": "Chat Name", "participant_ids": [1, 2, 3]}`
 - `GET /api/chats/{id}/` - Get chat details
-- `POST /api/chats/{id}/send_message/` - Send a message to a chat
+- `POST /api/chats/{id}/send_message/` - Send a message to a chat (REST API, not real-time)
   - Body: `{"content": "Message content"}`
 - `GET /api/chats/{id}/messages/` - Get all messages in a chat
+
+### WebSocket (Real-time Messaging)
+
+- `ws://localhost:8000/ws/chat/{chat_id}/` - Connect to a chat room for real-time messaging
+  - Send: `{"content": "Your message"}`
+  - Receive: `{"type": "message", "message": {...}}`
+
+See [WEBSOCKET_GUIDE.md](WEBSOCKET_GUIDE.md) for detailed WebSocket usage examples.
 
 ### Messages
 
@@ -97,5 +109,13 @@ Access the Django admin at `http://localhost:8000/admin/` to manage users, chats
 
 - **Django 5.2.7** - Web framework
 - **Django REST Framework** - API framework
+- **Django Channels** - WebSocket support for real-time messaging
+- **Daphne** - ASGI server for handling WebSocket connections
 - **SQLite** - Database for development
 - **Python 3.13** - Programming language
+
+## Documentation
+
+- [API_EXAMPLES.md](API_EXAMPLES.md) - REST API usage examples
+- [WEBSOCKET_GUIDE.md](WEBSOCKET_GUIDE.md) - WebSocket real-time messaging guide
+- [IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md) - Implementation details
