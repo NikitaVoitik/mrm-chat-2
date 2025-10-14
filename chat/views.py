@@ -6,7 +6,7 @@ from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiPara
 from drf_spectacular.types import OpenApiTypes
 from .models import Chat, Message
 from .serializers import (
-    UserRegistrationSerializer, UserSerializer,
+    UserRegistrationSerializer, UserSerializer, UserListSerializer,
     ChatSerializer, MessageSerializer
 )
 
@@ -128,6 +128,25 @@ def current_user(request):
     return Response(UserSerializer(request.user).data)
 
 
+@extend_schema(
+    tags=['Users'],
+    summary='List all users',
+    description='Get a list of all registered users with their usernames and names.',
+    responses={
+        200: UserListSerializer(many=True),
+    }
+)
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def list_users(request):
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    users = User.objects.all()
+    serializer = UserListSerializer(users, many=True)
+    return Response(serializer.data)
+
+
+
 @extend_schema_view(
     list=extend_schema(
         tags=['Chats'],
@@ -142,13 +161,21 @@ def current_user(request):
     create=extend_schema(
         tags=['Chats'],
         summary='Create a new chat',
-        description='Create a new chat room with the specified participants. The creator is automatically added as a participant.',
+        description='Create a new chat room with the specified participants. The creator is automatically added as a participant. You can use either participant_ids or participant_usernames (or both).',
         examples=[
             OpenApiExample(
-                'Create Chat Example',
+                'Create Chat with IDs Example',
                 value={
                     'name': 'Project Discussion',
                     'participant_ids': [2, 3, 4]
+                },
+                request_only=True,
+            ),
+            OpenApiExample(
+                'Create Chat with Usernames Example',
+                value={
+                    'name': 'Team Meeting',
+                    'participant_usernames': ['john_doe', 'jane_smith', 'invalid_user']
                 },
                 request_only=True,
             ),
