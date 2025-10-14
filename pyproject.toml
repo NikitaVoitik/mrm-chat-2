@@ -11,4 +11,5 @@ dependencies = [
     "daphne>=4.2.1",
     "drf-spectacular>=0.28.0",
     "drf-spectacular-sidecar>=2025.10.1",
+    "whitenoise>=6.11.0",
 ]
