@@ -19,7 +19,7 @@ A multi-person chat backend built with Django, Django REST Framework, and Django
 
 1. Install dependencies:
 ```bash
-pip install django djangorestframework channels daphne
+pip install django djangorestframework channels daphne drf-spectacular drf-spectacular-sidecar
 ```
 
 2. Run migrations:
@@ -38,6 +38,21 @@ python manage.py runserver
 ```
 
 The server will automatically start with ASGI/WebSocket support.
+
+## API Documentation
+
+Interactive API documentation is available via Swagger UI and ReDoc:
+
+- **Swagger UI**: http://localhost:8000/api/docs/
+- **ReDoc**: http://localhost:8000/api/redoc/
+- **OpenAPI Schema**: http://localhost:8000/api/schema/
+
+The Swagger UI provides:
+- Complete API endpoint documentation
+- Interactive API testing
+- Request/response examples
+- Schema definitions
+- WebSocket endpoint documentation
 
 ## API Endpoints
 
@@ -109,6 +124,7 @@ Access the Django admin at `http://localhost:8000/admin/` to manage users, chats
 
 - **Django 5.2.7** - Web framework
 - **Django REST Framework** - API framework
+- **drf-spectacular** - OpenAPI 3 schema generation and Swagger UI
 - **Django Channels** - WebSocket support for real-time messaging
 - **Daphne** - ASGI server for handling WebSocket connections
 - **SQLite** - Database for development
@@ -119,3 +135,5 @@ Access the Django admin at `http://localhost:8000/admin/` to manage users, chats
 - [API_EXAMPLES.md](API_EXAMPLES.md) - REST API usage examples
 - [WEBSOCKET_GUIDE.md](WEBSOCKET_GUIDE.md) - WebSocket real-time messaging guide
 - [IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md) - Implementation details
+
+Note: Access the interactive Swagger UI documentation at http://localhost:8000/api/docs/ for a complete, interactive API reference with examples and the ability to test endpoints directly in your browser.

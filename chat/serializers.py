@@ -6,8 +6,18 @@ User = get_user_model()
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
-    password_confirm = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
+    password = serializers.CharField(
+        write_only=True, 
+        required=True, 
+        style={'input_type': 'password'},
+        help_text='Password for the new account (minimum 8 characters recommended)'
+    )
+    password_confirm = serializers.CharField(
+        write_only=True, 
+        required=True, 
+        style={'input_type': 'password'},
+        help_text='Confirm password (must match password field)'
+    )
 
     class Meta:
         model = User
@@ -51,7 +61,8 @@ class ChatSerializer(serializers.ModelSerializer):
     participant_ids = serializers.ListField(
         child=serializers.IntegerField(),
         write_only=True,
-        required=False
+        required=False,
+        help_text='List of user IDs to add as participants. The creator is automatically added.'
     )
 
     class Meta:
