@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-7_a_%9%nr2xpsohq7v&l8eeqz@+b^_nq4u64i5sc#fx$%dg1+b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mrm-chat-2.onrender.com']
+ALLOWED_HOSTS = ['mrm-chat-2.onrender.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -55,7 +55,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost:8000']
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:8000',
+    'http://localhost:8000',
+    'https://mrm-chat-2.onrender.com',
+    'http://mrm-chat-2.onrender.com'
+]
 
 ROOT_URLCONF = 'myproject.urls'
 
