@@ -1,2 +1,10 @@
 .idea
 uv.lock
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+db.sqlite3
+*.log
+local_settings.py
