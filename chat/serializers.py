@@ -42,7 +42,7 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ['id', 'chat', 'sender', 'content', 'timestamp']
-        read_only_fields = ['id', 'sender', 'timestamp']
+        read_only_fields = ['id', 'chat', 'sender', 'timestamp']
 
 
 class ChatSerializer(serializers.ModelSerializer):
