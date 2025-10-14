@@ -57,9 +57,32 @@ curl -X GET http://localhost:8000/api/me/ \
   -b cookies.txt
 ```
 
+### 4. Get list of all users
+
+```bash
+curl -X GET http://localhost:8000/api/users/ \
+  -b cookies.txt
+```
+
+Response:
+```json
+[
+  {
+    "username": "alice",
+    "first_name": "Alice",
+    "last_name": "Smith"
+  },
+  {
+    "username": "bob",
+    "first_name": "Bob",
+    "last_name": "Johnson"
+  }
+]
+```
+
 ## Chat Operations
 
-### 4. Create a chat
+### 5. Create a chat with user IDs
 
 ```bash
 curl -X POST http://localhost:8000/api/chats/ \
@@ -89,14 +112,71 @@ Response:
 }
 ```
 
-### 5. List all chats
+### 6. Create a chat with usernames
+
+```bash
+curl -X POST http://localhost:8000/api/chats/ \
+  -H "Content-Type: application/json" \
+  -b cookies.txt \
+  -d '{
+    "name": "Team Meeting",
+    "participant_usernames": ["bob", "charlie", "invalid_user"]
+  }'
+```
+
+**Note**: Invalid usernames (like "invalid_user") are automatically skipped. The chat will be created successfully with only the valid users.
+
+Response:
+```json
+{
+  "id": 2,
+  "name": "Team Meeting",
+  "participants": [
+    {
+      "id": 1,
+      "username": "alice",
+      "email": "alice@example.com",
+      "user_type": "student"
+    },
+    {
+      "id": 2,
+      "username": "bob",
+      "email": "bob@example.com",
+      "user_type": "staff"
+    },
+    {
+      "id": 3,
+      "username": "charlie",
+      "email": "charlie@example.com",
+      "user_type": "owner"
+    }
+  ],
+  "messages": [],
+  "created_at": "2025-10-14T07:01:00Z"
+}
+```
+
+### 7. Create a chat with both IDs and usernames
+
+```bash
+curl -X POST http://localhost:8000/api/chats/ \
+  -H "Content-Type: application/json" \
+  -b cookies.txt \
+  -d '{
+    "name": "Mixed Participants",
+    "participant_ids": [2],
+    "participant_usernames": ["charlie"]
+  }'
+```
+
+### 8. List all chats
 
 ```bash
 curl -X GET http://localhost:8000/api/chats/ \
   -b cookies.txt
 ```
 
-### 6. Send a message
+### 9. Send a message
 
 ```bash
 curl -X POST http://localhost:8000/api/chats/1/send_message/ \
@@ -123,7 +203,7 @@ Response:
 }
 ```
 
-### 7. Get chat messages
+### 10. Get chat messages
 
 ```bash
 curl -X GET http://localhost:8000/api/chats/1/messages/ \
@@ -148,7 +228,7 @@ Response:
 ]
 ```
 
-### 8. Logout
+### 11. Logout
 
 ```bash
 curl -X POST http://localhost:8000/api/logout/ \
@@ -161,6 +241,29 @@ Response:
   "message": "Logged out successfully"
 }
 ```
+
+## Additional Features
+
+### Creating Chats with Usernames vs IDs
+
+You have three options when creating chats:
+
+1. **Using participant_ids**: Traditional method with user IDs
+   ```json
+   {"name": "Chat", "participant_ids": [2, 3, 4]}
+   ```
+
+2. **Using participant_usernames**: New method with usernames (invalid usernames are skipped)
+   ```json
+   {"name": "Chat", "participant_usernames": ["alice", "bob", "invalid_user"]}
+   ```
+
+3. **Using both**: Combine both methods
+   ```json
+   {"name": "Chat", "participant_ids": [2], "participant_usernames": ["charlie"]}
+   ```
+
+The creator is automatically added as a participant in all cases.
 
 ## User Types
 

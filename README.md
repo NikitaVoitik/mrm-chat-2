@@ -68,11 +68,18 @@ The Swagger UI provides:
 
 - `GET /api/me/` - Get current user info (requires authentication)
 
+### Users
+
+- `GET /api/users/` - Get list of all registered users with their usernames and names (requires authentication)
+
 ### Chats
 
 - `GET /api/chats/` - List all chats for the current user
 - `POST /api/chats/` - Create a new chat
-  - Body: `{"name": "Chat Name", "participant_ids": [1, 2, 3]}`
+  - Body with IDs: `{"name": "Chat Name", "participant_ids": [1, 2, 3]}`
+  - Body with usernames: `{"name": "Chat Name", "participant_usernames": ["alice", "bob", "charlie"]}`
+  - Both methods can be combined: `{"name": "Chat Name", "participant_ids": [1], "participant_usernames": ["bob"]}`
+  - **Note**: Invalid usernames are automatically skipped without failing the request
 - `GET /api/chats/{id}/` - Get chat details
 - `POST /api/chats/{id}/send_message/` - Send a message to a chat (REST API, not real-time)
   - Body: `{"content": "Message content"}`
