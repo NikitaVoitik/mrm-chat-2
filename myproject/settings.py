@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'channels',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
     'chat',
 ]
 
@@ -137,6 +139,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 # Channels configuration
@@ -144,4 +147,23 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer',
     },
+}
+
+# DRF Spectacular settings for API documentation
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'MRM Chat API',
+    'DESCRIPTION': 'A multi-person chat backend built with Django, Django REST Framework, and Django Channels with WebSocket support for real-time messaging.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SCHEMA_PATH_PREFIX': '/api/',
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SWAGGER_UI_DIST': 'SIDECAR',
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+    'TAGS': [
+        {'name': 'Authentication', 'description': 'User authentication endpoints'},
+        {'name': 'Chats', 'description': 'Chat management endpoints'},
+        {'name': 'Messages', 'description': 'Message endpoints'},
+        {'name': 'WebSockets', 'description': 'WebSocket endpoints for real-time messaging'},
+    ],
 }
