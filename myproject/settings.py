@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'channels',
     'drf_spectacular',
     'drf_spectacular_sidecar',
+    'corsheaders',  # Add this
     'chat',
     'ai_chat',
 ]
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Add this - must be near the top
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -66,6 +68,22 @@ MIDDLEWARE = [
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# CORS settings
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # React default
+    "http://127.0.0.1:3000",
+    "http://localhost:8080",  # Vue default
+    "http://127.0.0.1:8080",
+    "http://localhost:5173",  # Vite default
+    "http://127.0.0.1:5173",
+    # Add your frontend domain here
+]
+
+# For development, you can temporarily allow all origins (not recommended for production)
+CORS_ALLOW_ALL_ORIGINS = True
+
+# Allow credentials to be included in CORS requests (needed for authentication)
+CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:8000',
@@ -160,7 +178,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'  # Add this line
 # Add this for collectstatic to work properly
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
-]
+    ]
 
 
 # Default primary key field type
