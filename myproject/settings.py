@@ -30,7 +30,8 @@ SECRET_KEY = 'django-insecure-7_a_%9%nr2xpsohq7v&l8eeqz@+b^_nq4u64i5sc#fx$%dg1+b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mrm-chat-2.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['*']
+
 
 
 # Application definition
