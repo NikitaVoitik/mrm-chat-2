@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'drf_spectacular_sidecar',
     'chat',
+    'ai_chat',
 ]
 
 MIDDLEWARE = [
@@ -201,6 +202,8 @@ SPECTACULAR_SETTINGS = {
         {'name': 'Authentication', 'description': 'User authentication endpoints'},
         {'name': 'Chats', 'description': 'Chat management endpoints'},
         {'name': 'Messages', 'description': 'Message endpoints'},
+        {'name': 'AI Chat', 'description': 'AI chat with ChatGPT endpoints'},
+        {'name': 'AI Messages', 'description': 'AI message endpoints'},
         {'name': 'WebSockets', 'description': 'WebSocket endpoints for real-time messaging'},
     ],
 }
