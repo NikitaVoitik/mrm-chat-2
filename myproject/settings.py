@@ -102,7 +102,7 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME', 'mrm'),
         'USER': os.environ.get('DB_USER', 'mrm_user'),
         'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-        'HOST': os.environ.get('DB_HOST', 'dpg-d3nkr7m3jpic73c0hi80-a.oregon-postgres.render.com'),
+        'HOST': os.environ.get('DB_HOST', 'dpg-d3nkr7m3jp1c73c0hi80-a.oregon-postgres.render.com'),
         'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
